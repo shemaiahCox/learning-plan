@@ -1,8 +1,6 @@
 # Software Engineer, Cloud-Native and AI Roadmap
 
-**Version 3.0**
-
-An execution-first learning plan for software engineering, Azure, Kubernetes, production AI, and Boomi integration.
+Version 3.0. An execution-first learning plan for software engineering, Azure, Kubernetes, production AI, and Boomi integration.
 
 ---
 
@@ -11,6 +9,7 @@ An execution-first learning plan for software engineering, Azure, Kubernetes, pr
 - [Executive Summary](#executive-summary)
 - [The Career Stack](#the-career-stack)
 - [How to use this plan](#how-to-use-this-plan)
+- [System and architectural design](#system-and-architectural-design)
 - [Phases](#phases)
 - [Portfolio Projects](#portfolio-projects)
 - [Portfolio Case Study Documentation Standard](#portfolio-case-study-documentation-standard)
@@ -20,7 +19,7 @@ An execution-first learning plan for software engineering, Azure, Kubernetes, pr
 
 ## Executive Summary
 
-This roadmap is a direct path to becoming a credible software engineer who can build, deploy, and integrate cloud-native and AI-powered applications.
+This roadmap starts with system design and architectural design, then uses each phase to go deeper and build the decision. The outcome is a software engineer who can design, deploy, and integrate cloud-native and AI-powered applications.
 
 | Track | Path |
 | --- | --- |
@@ -40,13 +39,15 @@ Focus on application-layer engineering and execution. Avoid deep administrative 
 - Jenkins administration
 - Heavy data-science theory
 
+[System and architectural design](#system-and-architectural-design) is the broad pass. Depth stays inside the phases as decision notes and Architecture Center articles. This is not a design-interview track and not a multi-region build.
+
 ### Emphasis Path
 
 For this career direction, put the most weight on:
 
-**System Design → APIs → Databases → Distributed Systems → Event-Driven Architecture → Azure → Security → AI Architecture**
+System Design → APIs → Databases → Distributed Systems → Event-Driven Architecture → Azure → Security → AI Architecture
 
-That combination fits Azure, Boomi, Business Central, APIs, Docker, Python/PHP, and LangGraph.
+That line is the topic order. [System and architectural design](#system-and-architectural-design) is where those topics are defined. The phases are where each one is practiced. The combination fits Azure, Boomi, Business Central, APIs, Docker, Python/PHP, and LangGraph.
 
 ---
 
@@ -65,7 +66,9 @@ That combination fits Azure, Boomi, Business Central, APIs, Docker, Python/PHP, 
 
 ## How to use this plan
 
-Each phase is self-contained: research, courses, and the hands-on build live in the same place. Open one phase at a time and work **top to bottom**:
+Read [System and architectural design](#system-and-architectural-design), including its links, before Phase 1. That section is the broad pass: what the two skills are, why you use them, and the concepts. The links there are articles, not workshops.
+
+Each phase is then the depth. Research, courses, and the hands-on build live in the same place. Open one phase at a time and work **top to bottom**:
 
 1. **Overview** — how this phase’s ideas fit together
 2. **Concept glossary** — what each term is, why it exists, when to use it, and what you give up
@@ -79,19 +82,60 @@ Research terms as **engineering decisions**, not isolated definitions:
 - Why would I use Redis instead of querying SQL?
 - When should I use Azure Service Bus instead of calling an API directly?
 - When should I choose a modular monolith instead of microservices?
+- When is a slightly stale read acceptable?
 
 Enough data-structures knowledge (arrays, maps, queues, Big O) to reason about performance and challenge AI-generated code is useful throughout. It is not a LeetCode-first path and is not a separate phase.
 
 ---
 
+## System and architectural design
+
+Read this section, including the links, before Phase 1. It is the broad pass. Each phase then goes deeper: glossary, courses, and a build. These links are articles. Tool workshops stay in the phases (Docker, Git, LangGraph Academy, Terraform, AKS, pipelines, OpenTelemetry, Service Bus, Boomi).
+
+### What they are, and why
+
+Architectural design chooses the shape: which parts exist, where the boundaries are, and how those parts are allowed to talk. You use it so a change in one place does not force a rewrite of everything else, and so another engineer can see the structure.
+
+System design chooses how that shape behaves under real constraints: growth, failure, stale data, and recovery. You use it so the structure still works when traffic, dependencies, or a region misbehave.
+
+They are two questions about one system. A shape that ignores load and failure will not hold. A scaling trick that ignores boundaries becomes a pile of coupled services.
+
+Start with [Design principles](https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/) and [Azure architecture styles](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/). The lists below attach one article to each concept. Several concepts share a page. Read the article once.
+
+### Architectural design
+
+- **Modular structure.** A layered app, a modular monolith, or microservices. Deepened in Phases 1 and 3. Layered and modular monolith: [Architecture styles](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/). Microservices: [Martin Fowler](https://martinfowler.com/articles/microservices.html).
+- **API contract.** REST, HTTP semantics, pagination, and idempotency. Phase 1. REST, HTTP, and pagination: [Web API design best practices](https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design). Idempotency: [Web API implementation](https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-implementation).
+- **API gateway.** One front door for routing, auth, and throttling. Phase 4. [API gateways](https://learn.microsoft.com/en-us/azure/architecture/microservices/design/gateway).
+- **Identity boundary.** Who is calling, and what they may do. Phase 2. Authentication and OAuth: [Microsoft identity platform](https://learn.microsoft.com/en-us/entra/identity-platform/v2-overview). Authorization: [OWASP API Security Top 10](https://api-security.owasp.org/editions/2023/en/0x11-t10/).
+- **Cloud shape.** A Well-Architected review, and which Azure service matches the design. Phase 2. [Azure Well-Architected Framework](https://learn.microsoft.com/en-us/azure/well-architected/).
+- **Delivery shape.** Containers, infrastructure as code, and CI/CD. Phases 1, 3, and 4. Containers: [Docker overview](https://docs.docker.com/get-started/docker-overview/). Infrastructure as code: [What is infrastructure as code?](https://learn.microsoft.com/en-us/devops/deliver/what-is-infrastructure-as-code). CI/CD: [What is continuous delivery?](https://learn.microsoft.com/en-us/devops/deliver/what-is-continuous-delivery).
+- **Event-driven integration.** Sync versus async, queues, pub/sub, outbox, saga, and CQRS. Phase 6. Sync versus async: [Interservice communication](https://learn.microsoft.com/en-us/azure/architecture/microservices/design/interservice-communication). Queues and pub/sub: [Asynchronous messaging options](https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/messaging). Dead-letter queues: [Service Bus dead-letter queues](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues). Events, producers, consumers, and sagas: [Event-driven architecture style](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven). Outbox and CQRS: [CQRS pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs).
+- **Design record.** C4 diagrams and Architecture Decision Records. Phase 6. [C4 model](https://c4model.com/). [Architecture decision records](https://adr.github.io/).
+- **AI boundary.** Where the agent, tools, retrieval, and vector search sit. Phases 1 and 5. Agents and tool calling: [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview). RAG: [Retrieval augmented generation overview](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview). Vector search: [Vector search overview](https://learn.microsoft.com/en-us/azure/search/vector-search-overview).
+
+### System design
+
+- **Design walkthrough and trade-offs.** Constraints, components, data flow, failure, and a rough size. No option wins every column. Phase 1. Walkthrough: [Design principles](https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/). Trade-offs: [Cloud Design Patterns](https://learn.microsoft.com/en-us/azure/architecture/patterns/).
+- **State placement.** A stateless HTTP edge, with state in a store or a checkpoint. Phase 1. Covered by [Design principles](https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/).
+- **Data.** Relational, NoSQL (document and key-value), and indexes. Phase 1. Relational and NoSQL: [Understand data store models](https://learn.microsoft.com/en-us/azure/architecture/data-guide/technology-choices/understand-data-store-models). Indexes: [SQL Server index design guide](https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-index-design-guide).
+- **Copies and splits.** Replication, partitioning, and strong versus eventual consistency. Phase 3. Replication is the data form of redundancy in [Design principles](https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/). Partitioning: [Sharding pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/sharding). Consistency: [Understand data store models](https://learn.microsoft.com/en-us/azure/architecture/data-guide/technology-choices/understand-data-store-models).
+- **Scale and availability.** Vertical scale, horizontal scale, and load balancing. Phase 3. Scale and availability: [Design to scale out](https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/scale-out) and [Well-Architected Reliability](https://learn.microsoft.com/en-us/azure/well-architected/reliability/). Load balancing: [Load balancing options](https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/load-balancing-overview).
+- **Speed.** Caching and a CDN. Phase 4. [Cache-Aside pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside).
+- **Resilience.** Retry, backoff, circuit breaker, rate limiting, and backpressure. Phase 4. Retry and backoff: [Retry pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/retry). Circuit breaker: [Circuit Breaker pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker). Rate limiting and backpressure: [Rate Limiting pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/rate-limiting-pattern).
+- **Seeing the system.** Logs, metrics, and traces. Phase 4. [Azure Monitor overview](https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/overview).
+- **Recovery.** SLAs, RPO, and RTO. Phase 4. [Architecture strategies for disaster recovery](https://learn.microsoft.com/en-us/azure/well-architected/reliability/disaster-recovery).
+
+---
+
 ## Phases
 
-1. [Phase 1: Local Foundations](#phase-1-local-foundations-and-agent-logic) — local API, Docker, LangGraph
-2. [Phase 2: Azure Identity and Networking](#phase-2-azure-fundamentals-identity-and-networking) — CLI, Key Vault, Entra, VNets
-3. [Phase 3: IaC and AKS](#phase-3-infrastructure-as-code-and-container-orchestration) — Terraform, Kubernetes, ACR
-4. [Phase 4: CI/CD and Production](#phase-4-production-delivery-and-cicd-automation) — pipelines, observability, resilience
-5. [Phase 5: Production AI](#phase-5-production-ai-engineering-and-enterprise-rag) — RAG, Azure OpenAI, evaluation
-6. [Phase 6: Boomi Integration](#phase-6-enterprise-integration-edge-boomi) — events, messaging, Molecule on AKS
+1. [Phase 1: Local Foundations](#phase-1-local-foundations-and-agent-logic) — application shape: API contract, modular monolith, state, and data choice
+2. [Phase 2: Azure Identity and Networking](#phase-2-azure-fundamentals-identity-and-networking) — trust boundary and cloud shape: identity, secrets, network, Well-Architected
+3. [Phase 3: IaC and AKS](#phase-3-infrastructure-as-code-and-container-orchestration) — more than one copy: scale, availability, replication, partitioning, consistency
+4. [Phase 4: CI/CD and Production](#phase-4-production-delivery-and-cicd-automation) — production behavior: resilience, observability, delivery, recovery
+5. [Phase 5: Production AI](#phase-5-production-ai-engineering-and-enterprise-rag) — AI architecture: agents, RAG, and vector search
+6. [Phase 6: Boomi Integration](#phase-6-enterprise-integration-edge-boomi) — boundaries between systems: events, messaging, and the written design
 
 ---
 
@@ -100,13 +144,13 @@ Enough data-structures knowledge (arrays, maps, queues, Big O) to reason about p
 <details>
 <summary>Open Phase 1 — overview, glossary, courses, build</summary>
 
-**Goal:** Master local code execution, stateful AI agents, containerisation, and version control.
+**Goal:** Design the application shape: the API contract, a modular monolith, where state lives, and which data store you use. Docker and LangGraph are how you build it.
 
 **Feeds:** [Portfolio Project 1](#project-1-cloud-native-microservice) (and the LangGraph core of [Project 2](#project-2-cloud-native-stateful-ai-platform))
 
 #### Overview
 
-You are building a local Python API that runs a stateful agent and ships in Docker. The API is the contract (REST, HTTP, pagination, idempotency). The codebase shape is a modular monolith: one deployable app with clear modules, kept mostly stateless at the HTTP edge, with state in the agent graph or a relational database. Read the glossary, then take the courses in order.
+You are building a local Python API that runs a stateful agent and ships in Docker. The definitions and reading links are in [System and architectural design](#system-and-architectural-design). This phase applies the walkthrough and the store choice. The API is the contract (REST, HTTP, pagination, idempotency). The codebase shape is a modular monolith: one deployable app with clear modules, kept mostly stateless at the HTTP edge, with state in the agent graph or a relational database. Read the glossary, then take the courses in order.
 
 #### Concept glossary
 
@@ -119,6 +163,7 @@ An architectural style for exposing resources over HTTP.
 - **Why it is used:** Clients and services need a shared, predictable interface for integration.
 - **When to use it:** Request-response APIs for web, mobile, and enterprise integrations (including Boomi and Business Central).
 - **Trade-offs:** Network latency, versioning, security, and distributed failures.
+- **Learn more:** [Web API design best practices](https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design) — also the reading for HTTP methods and pagination.
 
 ###### HTTP methods and status codes
 
@@ -143,6 +188,7 @@ Repeating the same request does not create unintended additional effects.
 - **Why it is used:** Networks and clients retry requests.
 - **When to use it:** Payments, orders, webhooks, message consumers, and any retried write.
 - **Trade-offs:** Often requires identifiers and duplicate-detection state.
+- **Learn more:** [Web API implementation](https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-implementation).
 
 ##### Software architecture
 
@@ -166,11 +212,21 @@ A single deployable application divided into strongly separated modules.
 
 ###### System design fundamentals
 
-Designing the major components of a system and how they interact.
+Designing the major components of a system and how they interact. Walk the design before you pick services: constraints, main components, data flow, failure modes, and a rough size (requests and data).
 
 - **Why it is used:** Applications need planning beyond individual functions and classes.
 - **When to use it:** When designing a new system or a significant feature.
 - **Trade-offs:** More design effort upfront; risk of over-engineering.
+- **Learn more:** [Design principles](https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/).
+
+###### Architecture trade-offs
+
+Comparing alternative designs against requirements and constraints. No option is best at everything.
+
+- **Why it is used:** Every option gives something up, so the choice has to be explicit.
+- **When to use it:** Every significant architecture decision.
+- **Trade-offs:** You accept a weakness in exchange for a more important benefit.
+- **Learn more:** [Cloud Design Patterns](https://learn.microsoft.com/en-us/azure/architecture/patterns/).
 
 ###### Stateful vs stateless
 
@@ -189,6 +245,15 @@ Structured data stored in related tables.
 - **Why it is used:** Business data usually has relationships and consistency requirements.
 - **When to use it:** Customers, orders, payments, inventory, and ERP/CRM-shaped data.
 - **Trade-offs:** Rigid schemas and some scaling limits.
+
+###### NoSQL
+
+Non-relational storage, such as a document store or a key-value store.
+
+- **Why it is used:** Some workloads need a flexible shape or a fast lookup more than they need joins.
+- **When to use it:** Key-value (for example Redis) for hot lookups and cache, when you can give up queries and relationships. Document when one aggregate varies in shape and you do not need multi-row transactions. Relational stays the default for orders, customers, and ERP-shaped data.
+- **Trade-offs:** Relationships, consistency, and transactions differ by product.
+- **Learn more:** [Understand data store models](https://learn.microsoft.com/en-us/azure/architecture/data-guide/technology-choices/understand-data-store-models).
 
 ###### Indexes
 
@@ -241,8 +306,7 @@ Complete these after the glossary. Each link opens that course or module.
 1. [Shell Scripts for Beginners (KodeKloud)](https://kodekloud.com/courses/shell-scripts-for-beginners/) — **paid**
 2. [Introduction to Git (Microsoft Learn)](https://learn.microsoft.com/en-us/training/modules/intro-to-git/)
 3. [Docker Get Started workshop](https://docs.docker.com/get-started/workshop/)
-4. [Web API design best practices](https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design) — the study text for REST, HTTP, pagination, and idempotency
-5. [Foundation: Introduction to LangGraph – Python (LangChain Academy)](https://academy.langchain.com/courses/intro-to-langgraph)
+4. [Foundation: Introduction to LangGraph – Python (LangChain Academy)](https://academy.langchain.com/courses/intro-to-langgraph)
 
 #### Build
 
@@ -260,7 +324,7 @@ Complete these after the glossary. Each link opens that course or module.
 <details>
 <summary>Open Phase 2 — overview, glossary, courses, build</summary>
 
-**Goal:** Build a secure Azure foundation for application identity, secrets, and networking.
+**Goal:** Decide the trust boundary and the cloud shape: who can call the app, where secrets live, which network paths exist, and whether the design meets the Well-Architected Framework. Azure CLI, Key Vault, Entra ID, and VNets are how you apply it.
 
 **Feeds:** The Azure account, identity, and network that [Project 1](#project-1-cloud-native-microservice) and later projects run on.
 
@@ -392,13 +456,13 @@ Complete these after the glossary. Each link opens that learning path or module.
 <details>
 <summary>Open Phase 3 — overview, glossary, courses, build</summary>
 
-**Goal:** Automate Azure infrastructure with Terraform and deploy applications onto AKS.
+**Goal:** Design for more than one copy: scale, availability, replication, partitioning, consistency, and when a microservice is worth it. Terraform and AKS are how you build it.
 
 **Feeds:** [Portfolio Project 1](#project-1-cloud-native-microservice) — ACR, AKS, and Terraform.
 
 #### Overview
 
-Phase 1 packaged an app; this phase places it on a cluster you can recreate. Terraform makes the VNet, Key Vault, ACR, and AKS repeatable. Kubernetes (CKAD focus: Pods, Deployments, Services) is how the container actually runs. Microservices, scaling, and load balancing become real once you have more than one instance. Prefer a modular monolith until independent deployability is worth the extra failure modes. Read the glossary, then take the courses in order.
+Phase 1 packaged an app; this phase places it on a cluster you can recreate. Terraform makes the VNet, Key Vault, ACR, and AKS repeatable. Kubernetes (CKAD focus: Pods, Deployments, Services) is how the container actually runs. Microservices, scaling, and load balancing become real once you have more than one instance. With more than one copy you also choose replication, partitioning, and whether reads must be strongly consistent. Prefer a modular monolith until independent deployability is worth the extra failure modes. Read the glossary, then take the courses in order.
 
 #### Concept glossary
 
@@ -419,6 +483,7 @@ Splitting business capabilities into independently deployable services.
 - **Why it is used:** Large systems or teams may need to deploy and scale parts independently.
 - **When to use it:** Only when that independence is worth distributed-system cost.
 - **Trade-offs:** Networking, data consistency, deployment, observability, and debugging get much harder.
+- **Learn more:** [Martin Fowler: Microservices](https://martinfowler.com/articles/microservices.html).
 
 ##### Scale and availability
 
@@ -462,6 +527,33 @@ Distributing requests across those instances.
 - **When to use it:** When more than one replica serves the same workload (Kubernetes Service / Ingress).
 - **Trade-offs:** Extra infrastructure; sticky sessions fight stateless design.
 
+###### Replication
+
+Extra copies of data, for reads and for surviving a node loss.
+
+- **Why it is used:** One copy is a single point of failure, and reads can outgrow the primary.
+- **When to use it:** When availability or read scale needs more than one copy. This is the data form of redundancy from the design principles.
+- **Trade-offs:** Writes and replication lag become your problem.
+- **Learn more:** [Design principles](https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/).
+
+###### Partitioning
+
+Splitting data so one machine, or one hotspot, is not the ceiling.
+
+- **Why it is used:** A single store has a size and throughput limit.
+- **When to use it:** When one database or one key is the bottleneck.
+- **Trade-offs:** Cross-partition queries and transactions get harder.
+- **Learn more:** [Sharding pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/sharding).
+
+###### Consistency
+
+Whether a read sees the latest write. Strong means it does. Eventual means it might not, for a while.
+
+- **Why it is used:** Copies of data can disagree until replication catches up.
+- **When to use it:** Strong when the reader must see the latest write. Eventual when a slightly stale read is acceptable in exchange for availability.
+- **Trade-offs:** Strong consistency costs latency and availability. Eventual consistency is harder to program and debug.
+- **Learn more:** [Understand data store models](https://learn.microsoft.com/en-us/azure/architecture/data-guide/technology-choices/understand-data-store-models).
+
 #### Courses (in order)
 
 Complete these after the glossary. Each link opens that tutorial or module.
@@ -486,13 +578,13 @@ Complete these after the glossary. Each link opens that tutorial or module.
 <details>
 <summary>Open Phase 4 — overview, glossary, courses, build</summary>
 
-**Goal:** Automate build, test, infrastructure, and deployment so a git push can reach AKS safely.
+**Goal:** Design production behavior: resilience, observability, delivery, and recovery. Pipelines are how you ship it.
 
 **Feeds:** The pipeline and telemetry for [Portfolio Project 1](#project-1-cloud-native-microservice).
 
 #### Overview
 
-A production architecture includes how software is released. The path is: git push → lint and test → Terraform plan/apply → Docker build and push → AKS deploy. Observability (logs, metrics, traces) is how you answer what broke. Resilience (retry, backoff, circuit breaker, cache) is how the running system survives blips. Requirements and SLAs are the constraints you design against. Read the glossary, then take the courses in order.
+A production architecture includes how software is released. The path is: git push → lint and test → Terraform plan/apply → Docker build and push → AKS deploy. Observability (logs, metrics, traces) is how you answer what broke. Resilience (retry, backoff, circuit breaker, cache, rate limiting, backpressure) is how the running system survives blips. Recovery objectives say how much data you can lose and how long you can be down, which is a bigger decision than a retry. Requirements and SLAs are the constraints you design against. Read the glossary, then take the courses in order.
 
 #### Concept glossary
 
@@ -566,6 +658,42 @@ Keeping frequently read data in faster storage.
 - **When to use it:** Hot reads that do not always need a fresh fetch.
 - **Trade-offs:** Stale data and cache invalidation.
 
+###### CDN
+
+A cache placed near clients for public or static reads.
+
+- **Why it is used:** The same response should not travel from the origin for every distant caller.
+- **When to use it:** Public or static content that many clients read, and that can be slightly stale.
+- **Trade-offs:** Invalidation delay, and it does not help private or personalised responses.
+- **Learn more:** [Cache-Aside pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside).
+
+###### Rate limiting
+
+A cap on how fast callers can hit you, or how fast you call someone else.
+
+- **Why it is used:** Unlimited traffic takes down the dependency or your own service.
+- **When to use it:** Public APIs, and any client that calls a throttled downstream service.
+- **Trade-offs:** Legitimate bursts get rejected, and you must define the limit.
+- **Learn more:** [Rate Limiting pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/rate-limiting-pattern).
+
+###### Backpressure
+
+A signal that tells producers to slow down, instead of retrying harder.
+
+- **Why it is used:** Retries against an overloaded dependency make the outage worse.
+- **When to use it:** When a dependency returns a throttle or overload signal, such as HTTP 429 and `Retry-After`.
+- **Trade-offs:** Work waits longer, and callers must honour the signal.
+- **Learn more:** [Rate Limiting pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/rate-limiting-pattern).
+
+###### API gateway
+
+One front door for routing, authentication, and throttling.
+
+- **Why it is used:** Every service should not reimplement the same edge rules.
+- **When to use it:** On AKS, Ingress can be that door. A managed gateway fits when many external clients need auth, throttling, and a published API.
+- **Trade-offs:** Another hop, and a gateway you do not need is extra cost and configuration.
+- **Learn more:** [API gateways](https://learn.microsoft.com/en-us/azure/architecture/microservices/design/gateway).
+
 ##### Requirements
 
 ###### Requirements and SLAs
@@ -575,6 +703,15 @@ Functional needs, non-functional constraints (latency, uptime), and the service 
 - **Why it is used:** With AI-generated code, the engineer still decides what “done” means.
 - **When to use it:** Before you design the pipeline, the cluster size, or the retry policy.
 - **Trade-offs:** Tight SLAs cost redundancy and operational effort.
+
+###### Recovery objectives
+
+RPO is how much data you can lose. RTO is how long you can be down. Disaster recovery is the plan for losing a whole region or site.
+
+- **Why it is used:** Retries and extra replicas do not cover a region failure.
+- **When to use it:** When the business states a downtime and data-loss budget that a single region cannot meet.
+- **Trade-offs:** A second region costs money and operational complexity. This is a principles decision, not a multi-region build on this roadmap.
+- **Learn more:** [Architecture strategies for disaster recovery](https://learn.microsoft.com/en-us/azure/well-architected/reliability/disaster-recovery).
 
 #### Courses (in order)
 
@@ -609,7 +746,7 @@ Git push
 <details>
 <summary>Open Phase 5 — overview, glossary, courses, build</summary>
 
-**Goal:** Move from a local agent to a production RAG system on Azure, with evaluation.
+**Goal:** Design the AI boundary: where agents, retrieval, and vector search sit in a production RAG system on Azure, and how you evaluate the answers.
 
 **Feeds:** [Portfolio Project 2](#project-2-cloud-native-stateful-ai-platform)
 
@@ -618,6 +755,8 @@ Git push
 A model call is not a product. RAG retrieves organisational text, embeds it, and grounds the prompt so answers cite current private knowledge. You will provision Azure OpenAI and Azure AI Search with Terraform, attach the Phase 1 LangGraph agent with workload identity, and measure retrieval and answer quality. Read the glossary before you pick Search vs PGVector or a hosted model vs a local one.
 
 #### Concept glossary
+
+##### AI architecture
 
 ###### RAG
 
@@ -691,13 +830,13 @@ Complete these after the glossary. Each link opens that module.
 <details>
 <summary>Open Phase 6 — overview, glossary, courses, build</summary>
 
-**Goal:** Run Boomi on AKS so enterprise events can invoke your LangGraph service and write back.
+**Goal:** Design the boundaries between systems: events, messaging, outbox, saga, CQRS, and a written design. Boomi on AKS is how you connect them.
 
 **Feeds:** [Portfolio Project 3](#project-3-enterprise-ai-integration-platform)
 
 #### Overview
 
-Enterprise systems already emit events (an order created, a customer updated). You do not poll them with a cron job if you can subscribe. This phase is messaging plus Boomi: Atom or Molecule on AKS receives a webhook, maps JSON/XML, calls the AI API, and writes the result back. Sync vs async, queues vs pub/sub, and dead-letter queues are the decisions. Document the result with C4 diagrams and ADRs so another engineer can understand it. Read the glossary, then take the courses in order.
+Enterprise systems already emit events (an order created, a customer updated). You do not poll them with a cron job if you can subscribe. This phase is messaging plus Boomi: Atom or Molecule on AKS receives a webhook, maps JSON/XML, calls the AI API, and writes the result back. Sync versus async is the first cut; a queue plus an outbox, a saga, or CQRS is how you keep that async work consistent. Queues versus pub/sub, and dead-letter queues, are the other decisions. Document the result with C4 diagrams and ADRs so another engineer can understand it. Read the glossary, then take the courses in order.
 
 #### Concept glossary
 
@@ -710,6 +849,7 @@ A record that something happened, such as `OrderCreated`.
 - **Why it is used:** Other systems can react without being called directly.
 - **When to use it:** When several consumers may care that a business fact occurred.
 - **Trade-offs:** Event flows are harder to trace than a single request.
+- **Learn more:** [Event-driven architecture style](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven).
 
 ###### Producer / consumer
 
@@ -718,6 +858,7 @@ Producers publish; consumers react.
 - **Why it is used:** The announcer should not know every listener.
 - **When to use it:** Event-driven and integration architectures (Boomi → AI → ERP).
 - **Trade-offs:** Consumers must handle retries, duplicates, and failure.
+- **Learn more:** [Event-driven architecture style](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven).
 
 ###### Synchronous vs asynchronous
 
@@ -726,6 +867,7 @@ Sync: call and wait. Async: hand work off and continue.
 - **Why it is used:** Some calls need an immediate answer; others should not block the caller.
 - **When to use it:** Sync for “create this now and return the id.” Async for emails, enrichment, and long AI runs.
 - **Trade-offs:** Sync couples availability. Async means eventual consistency and harder debugging.
+- **Learn more:** [Interservice communication](https://learn.microsoft.com/en-us/azure/architecture/microservices/design/interservice-communication).
 
 ###### Message queue
 
@@ -734,6 +876,7 @@ A buffer: one producer, competing consumers process later.
 - **Why it is used:** Producer and consumer need not be up at the same time.
 - **When to use it:** Work that can wait, or where the downstream system can fail for a while.
 - **Trade-offs:** Extra infrastructure; duplicates, ordering, and monitoring.
+- **Learn more:** [Asynchronous messaging options](https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/messaging).
 
 ###### Publish / subscribe
 
@@ -742,6 +885,7 @@ One event, many independent subscribers.
 - **Why it is used:** Several systems should react to the same fact.
 - **When to use it:** Fan-out (notify CRM, warehouse, and AI from one `OrderCreated`).
 - **Trade-offs:** Harder to see the full flow.
+- **Learn more:** [Asynchronous messaging options](https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/messaging).
 
 ###### Dead-letter queue
 
@@ -750,6 +894,34 @@ Storage for messages that cannot be processed.
 - **Why it is used:** Poison messages should not vanish or block the healthy queue.
 - **When to use it:** Any reliable integration or Service Bus / Boomi workload.
 - **Trade-offs:** You must watch the DLQ and have a reprocess plan.
+- **Learn more:** [Service Bus dead-letter queues](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues).
+
+###### Transactional outbox
+
+Write the business change and the event in the same database transaction, then publish the event from that record.
+
+- **Why it is used:** Saving the row and then publishing can lose the event if the process dies between the two writes.
+- **When to use it:** When a state change must reliably notify another system.
+- **Trade-offs:** A publisher process, and consumers must tolerate duplicates.
+- **Learn more:** [CQRS pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs).
+
+###### Saga
+
+A multi-step business process in which each step can fail and needs a compensating action.
+
+- **Why it is used:** One distributed transaction across services is not available.
+- **When to use it:** When a business outcome needs several services, and a later step can force an earlier step to undo.
+- **Trade-offs:** Compensation logic, and a harder path to see the whole process.
+- **Learn more:** [Event-driven architecture style](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven).
+
+###### CQRS
+
+Separate the write model from a read model when their shapes or scale differ.
+
+- **Why it is used:** The query that serves a screen is often not the shape of the transaction that changed the data.
+- **When to use it:** When reads and writes diverge enough that one model fights both jobs.
+- **Trade-offs:** The read side lags the write, and you now have two models to keep aligned.
+- **Learn more:** [CQRS pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs).
 
 ##### Documentation
 
@@ -760,6 +932,7 @@ Context, Container, Component, and Code views of a system.
 - **Why it is used:** Different people need different levels of detail.
 - **When to use it:** Explaining Project 3 (and earlier projects) to someone else.
 - **Trade-offs:** Diagrams go stale if you do not update them.
+- **Learn more:** [C4 model](https://c4model.com/).
 
 ###### ADRs
 
@@ -768,6 +941,7 @@ Architecture Decision Records: short docs of a choice, context, and consequences
 - **Why it is used:** Six months later you will not remember why you picked Molecule or Service Bus.
 - **When to use it:** Each significant trade-off (AKS vs App Service, Search vs PGVector).
 - **Trade-offs:** Process overhead if you ADR trivial choices.
+- **Learn more:** [Architecture decision records](https://adr.github.io/).
 
 #### Courses (in order)
 
@@ -804,7 +978,7 @@ Python API
   → GitHub Actions pipeline
 ```
 
-**Deliverables**
+#### Deliverables
 
 - Containerised API
 - Infrastructure as Code
@@ -822,7 +996,7 @@ LangGraph agents
   → Workload identity
 ```
 
-**Deliverables**
+#### Deliverables
 
 - Stateful multi-agent workflow
 - Enterprise RAG system
@@ -840,7 +1014,7 @@ Enterprise event
   → Enterprise system update
 ```
 
-**Deliverables**
+#### Deliverables
 
 - Event-driven integration
 - AI middleware layer
@@ -887,6 +1061,8 @@ Document architectural decisions such as:
 - LangGraph vs linear chains
 - Azure AI Search vs PGVector
 - Terraform vs manual provisioning
+- Relational vs key-value for a hot read
+- A sync call vs a queue plus an outbox
 
 ### 5. Observability and costs
 

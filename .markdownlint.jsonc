@@ -1,0 +1,12 @@
+{
+  // Tables and article URLs run past 80 characters. Wrapping them breaks the tables.
+  "MD013": false,
+  // Phases use <details> so each phase stays collapsed until you open it.
+  "MD033": {
+    "allowed_elements": ["details", "summary"]
+  },
+  // Each phase repeats Overview, Concept glossary, Courses, and Build under its own heading.
+  "MD024": {
+    "siblings_only": true
+  }
+}
