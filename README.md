@@ -16,7 +16,7 @@ Version 4.0. A path from a working application to a system you can deploy, monit
 
 This plan is for a software engineer who wants to ship scalable applications on Azure, then add production AI and enterprise integration. Architecture is how you organise the parts. Cloud engineering is how you deploy, secure, and run them. You practice both on one system.
 
-Learn the problem, try it, and write down what you gave up. Finish a phase's build before you start the next one. There is no week-number deadline.
+Understand the problem, implement it, and write down what you gave up. Finish a phase's build before you start the next one. There is no week-number deadline.
 
 Specialist algorithms and a second cloud are out of this plan. Kubernetes waits until a workload needs a cluster.
 
@@ -54,11 +54,11 @@ Open one phase at a time. Work from Goal through Build.
 
 #### Goal
 
-Build one deployable application: a Python API with a clear shape, tests, and a LangGraph agent inside it. Docker, which you are already learning, packages it.
+Build one deployable application: a Python API with a clear shape, tests, and a LangGraph agent inside it. Docker packages it.
 
 Done when a change to one module does not force a rewrite of the others, and you have written down why it is still one application.
 
-#### Learn
+#### Key Concepts
 
 ##### Modular monolith
 
@@ -146,7 +146,7 @@ Find the slow part of the Phase 1 app and fix that part. Add a cache, a CDN, or 
 
 Done when you can point at a number, name the bottleneck, and say why the fix matches it.
 
-#### Learn
+#### Key Concepts
 
 ##### Bottlenecks
 
@@ -219,7 +219,7 @@ Run the same container on Azure with a managed identity, secrets in Key Vault, a
 
 Done when the app is running on Container Apps and the process does not hold a stored password.
 
-#### Learn
+#### Key Concepts
 
 ##### Identity
 
@@ -307,7 +307,7 @@ Make the Container Apps environment repeatable, ship a change through a pipeline
 
 Done when a git push can deploy, and you have a load-test number plus a written recovery for one broken dependency.
 
-#### Learn
+#### Key Concepts
 
 ##### CI/CD
 
@@ -324,7 +324,7 @@ Describe the resource group, Key Vault, registry, and Container Apps environment
 
 - **Why:** A clicked environment cannot be reviewed or rebuilt with confidence.
 - **When:** The environment from Phase 3.
-- **Trade-off:** Another language to learn. Bicep is the Azure-native alternative this plan does not take.
+- **Trade-off:** Another language. Bicep is the Azure-native alternative this plan does not take.
 - **Learn more:** [What is infrastructure as code?](https://learn.microsoft.com/en-us/devops/deliver/what-is-infrastructure-as-code)
 
 ##### Logs, metrics, traces, and alerts
@@ -394,7 +394,7 @@ Add retrieval and a hosted model to the LangGraph agent already in the app. Use 
 
 Done when a question returns an answer tied to your documents, and you can show the retrieval and answer metrics.
 
-#### Learn
+#### Key Concepts
 
 ##### Agents and tool calling
 
@@ -469,7 +469,7 @@ Accept work from outside the API, survive a partner that is slow or down, and wr
 
 Done when a failed partner call is visible, retryable, and does not corrupt the system of record. Stand up AKS only if the Boomi runtime or a second independently deployed part needs a cluster.
 
-#### Learn
+#### Key Concepts
 
 ##### Sync, async, and queues
 
