@@ -1,6 +1,6 @@
 # Software Engineer, Cloud-Native and AI Roadmap
 
-Version 3.0. An execution-first learning plan for software engineering, Azure, Kubernetes, production AI, and Boomi integration.
+Version 3.1. An execution-first learning plan for software engineering, Azure, Kubernetes, production AI, and Boomi integration. Same direction as 3.0. This revision adds how you prove the software is right: tests, a fixed evaluation set, and hard limits on what an agent may do.
 
 ---
 
@@ -24,8 +24,8 @@ This roadmap starts with system design and architectural design, then uses each 
 | Track | Path |
 | --- | --- |
 | **Primary trajectory** | Software Engineer → Cloud-Native Engineer → AI Engineer, with a Boomi enterprise integration edge |
-| **Core platform stack** | Azure, AKS, Docker, Terraform, GitHub Actions, Azure DevOps |
-| **AI focus** | LLMs, LangGraph, RAG, agents, vector search, managed identity, evaluation frameworks |
+| **Core platform stack** | Azure, AKS, Docker, Terraform, GitHub Actions. Azure Pipelines is a mapping exercise |
+| **AI focus** | LangGraph for explicit state, tools, and interrupts; RAG; Azure OpenAI; vector search; an evaluation set; tool permissions |
 | **Integration edge** | Boomi runtimes, Molecule on AKS, API integration, enterprise systems |
 
 **Target career path:** Software Engineer → Cloud-Native Engineer → AI Engineer → Enterprise AI Integration Specialist.
@@ -34,7 +34,7 @@ This roadmap starts with system design and architectural design, then uses each 
 
 Focus on application-layer engineering and execution. Avoid deep administrative paths such as:
 
-- Certified Kubernetes Administrator (CKA) — use **CKAD** instead
+- Certified Kubernetes Administrator (CKA). Learn the deployment tasks (pods, deployments, services, probes, identity). That is the CKAD task set, not a requirement to sit the exam. Book CKAD only if an employer asks.
 - Azure Networking Specialist (AZ-700)
 - Jenkins administration
 - Heavy data-science theory
@@ -57,9 +57,9 @@ That line is the topic order. [System and architectural design](#system-and-arch
 | --- | --- | --- | --- |
 | **1. Software and scripting** | Python, APIs, Git, shell scripting, SQL, testing | Foundational skills for reliable code and automation | Build APIs, automate processes, and manage code |
 | **2. Cloud and platform** | Azure CLI, Entra ID (RBAC), Key Vault, VNets, subnets | Security, identity, and networking foundations | Provision and manage Azure resources securely |
-| **3. Cloud-native and orchestration** | Docker, Kubernetes (CKAD focus), AKS, container registries | Package, scale, and manage containerised applications | Deploy and manage applications on AKS |
-| **4. Automation and CI/CD** | Terraform, GitHub Actions, Azure Pipelines | Automate infrastructure and deployment | Deploy environments and applications through code |
-| **5. AI engineering** | LangGraph, deep agents, RAG, Azure OpenAI, vector stores | Production AI application development | Deploy stateful AI agents and RAG systems |
+| **3. Cloud-native and orchestration** | Docker, Kubernetes task set (pods, deployments, services, probes, identity), AKS, container registries | Package, scale, and manage containerised applications | Deploy and manage applications on AKS |
+| **4. Automation and CI/CD** | Terraform, GitHub Actions (the portfolio pipeline), Azure Pipelines (a mapping exercise) | Automate infrastructure and deployment | Deploy environments and applications through one pipeline |
+| **5. AI engineering** | LangGraph for explicit state, tools, and interrupts; RAG; Azure OpenAI; vector search; an evaluation set; tool permissions. Deep Agents is a later harness, not a core skill | Production AI application development | Deploy a stateful agent and a RAG system you can evaluate and bound |
 | **6. Integration edge** | Boomi, APIs, runtime / Molecule on AKS | Connect AI services to enterprise platforms | Integrate AI with CRMs, ERPs, and enterprise systems |
 
 ---
@@ -76,6 +76,10 @@ Each phase is then the depth. Research, courses, and the hands-on build live in 
 4. **Build** — the checklist that proves you can apply it
 
 Do not start a course until the overview and glossary for that phase make sense. Do not move to the next phase until the build checklist is done.
+
+Tick a build box only when the evidence is in the repo. The next review will treat an unticked plan as not started.
+
+Write the acceptance criteria and the tests before you delegate a change to a coding agent. Record what you rejected. Spec Kit and similar spec frameworks are not on this plan.
 
 Research terms as **engineering decisions**, not isolated definitions:
 
@@ -112,13 +116,13 @@ Start with [Design principles](https://learn.microsoft.com/en-us/azure/architect
 - **Delivery shape.** Containers, infrastructure as code, and CI/CD. Phases 1, 3, and 4. Containers: [Docker overview](https://docs.docker.com/get-started/docker-overview/). Infrastructure as code: [What is infrastructure as code?](https://learn.microsoft.com/en-us/devops/deliver/what-is-infrastructure-as-code). CI/CD: [What is continuous delivery?](https://learn.microsoft.com/en-us/devops/deliver/what-is-continuous-delivery).
 - **Event-driven integration.** Sync versus async, queues, pub/sub, outbox, saga, and CQRS. Phase 6. Sync versus async: [Interservice communication](https://learn.microsoft.com/en-us/azure/architecture/microservices/design/interservice-communication). Queues and pub/sub: [Asynchronous messaging options](https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/messaging). Dead-letter queues: [Service Bus dead-letter queues](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues). Events, producers, consumers, and sagas: [Event-driven architecture style](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven). Outbox and CQRS: [CQRS pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs).
 - **Design record.** C4 diagrams and Architecture Decision Records. Phase 6. [C4 model](https://c4model.com/). [Architecture decision records](https://adr.github.io/).
-- **AI boundary.** Where the agent, tools, retrieval, and vector search sit. Phases 1 and 5. Agents and tool calling: [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview). RAG: [Retrieval augmented generation overview](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview). Vector search: [Vector search overview](https://learn.microsoft.com/en-us/azure/search/vector-search-overview).
+- **AI boundary.** Where the agent, tools, retrieval, vector search, the evaluation set, and tool permissions sit. Phases 1 and 5. Agents and tool calling: [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview). RAG: [Retrieval augmented generation overview](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview). Vector search: [Vector search overview](https://learn.microsoft.com/en-us/azure/search/vector-search-overview). Prompt injection: [OWASP LLM01:2025](https://genai.owasp.org/llmrisk/llm01-prompt-injection/).
 
 ### System design
 
 - **Design walkthrough and trade-offs.** Constraints, components, data flow, failure, and a rough size. No option wins every column. Phase 1. Walkthrough: [Design principles](https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/). Trade-offs: [Cloud Design Patterns](https://learn.microsoft.com/en-us/azure/architecture/patterns/).
 - **State placement.** A stateless HTTP edge, with state in a store or a checkpoint. Phase 1. Covered by [Design principles](https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/).
-- **Data.** Relational, NoSQL (document and key-value), and indexes. Phase 1. Relational and NoSQL: [Understand data store models](https://learn.microsoft.com/en-us/azure/architecture/data-guide/technology-choices/understand-data-store-models). Indexes: [SQL Server index design guide](https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-index-design-guide).
+- **Data.** Relational, NoSQL (document and key-value), and indexes. Phase 1. Relational and NoSQL: [Understand data store models](https://learn.microsoft.com/en-us/azure/architecture/data-guide/technology-choices/understand-data-store-models). Indexes: [SQL Server index design guide](https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-index-design-guide). The Phase 1 build runs one query plan and adds the index it justifies.
 - **Copies and splits.** Replication, partitioning, and strong versus eventual consistency. Phase 3. Replication is the data form of redundancy in [Design principles](https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/). Partitioning: [Sharding pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/sharding). Consistency: [Understand data store models](https://learn.microsoft.com/en-us/azure/architecture/data-guide/technology-choices/understand-data-store-models).
 - **Scale and availability.** Vertical scale, horizontal scale, and load balancing. Phase 3. Scale and availability: [Design to scale out](https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/scale-out) and [Well-Architected Reliability](https://learn.microsoft.com/en-us/azure/well-architected/reliability/). Load balancing: [Load balancing options](https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/load-balancing-overview).
 - **Speed.** Caching and a CDN. Phase 4. [Cache-Aside pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside).
@@ -130,11 +134,11 @@ Start with [Design principles](https://learn.microsoft.com/en-us/azure/architect
 
 ## Phases
 
-1. [Phase 1: Local Foundations](#phase-1-local-foundations-and-agent-logic) — application shape: API contract, modular monolith, state, and data choice
+1. [Phase 1: Local Foundations](#phase-1-local-foundations-and-agent-logic) — application shape: API contract, tests, modular monolith, state, and data choice
 2. [Phase 2: Azure Identity and Networking](#phase-2-azure-fundamentals-identity-and-networking) — trust boundary and cloud shape: identity, secrets, network, Well-Architected
 3. [Phase 3: IaC and AKS](#phase-3-infrastructure-as-code-and-container-orchestration) — more than one copy: scale, availability, replication, partitioning, consistency
 4. [Phase 4: CI/CD and Production](#phase-4-production-delivery-and-cicd-automation) — production behavior: resilience, observability, delivery, recovery
-5. [Phase 5: Production AI](#phase-5-production-ai-engineering-and-enterprise-rag) — AI architecture: agents, RAG, and vector search
+5. [Phase 5: Production AI](#phase-5-production-ai-engineering-and-enterprise-rag) — AI architecture: agents, RAG, vector search, an evaluation set, and tool permissions
 6. [Phase 6: Boomi Integration](#phase-6-enterprise-integration-edge-boomi) — boundaries between systems: events, messaging, and the written design
 
 ---
@@ -144,13 +148,13 @@ Start with [Design principles](https://learn.microsoft.com/en-us/azure/architect
 <details>
 <summary>Open Phase 1 — overview, glossary, courses, build</summary>
 
-**Goal:** Design the application shape: the API contract, a modular monolith, where state lives, and which data store you use. Docker and LangGraph are how you build it.
+**Goal:** Design the application shape: the API contract, the tests that define done, a modular monolith, where state lives, and which data store you use. Docker and LangGraph are how you build it. A coding agent edits the repo only after those tests exist.
 
-**Feeds:** [Portfolio Project 1](#project-1-cloud-native-microservice) (and the LangGraph core of [Project 2](#project-2-cloud-native-stateful-ai-platform))
+**Feeds:** [Portfolio Project 1](#project-1-cloud-native-api-modular-monolith) (and the LangGraph core of [Project 2](#project-2-cloud-native-stateful-ai-platform))
 
 #### Overview
 
-You are building a local Python API that runs a stateful agent and ships in Docker. The definitions and reading links are in [System and architectural design](#system-and-architectural-design). This phase applies the walkthrough and the store choice. The API is the contract (REST, HTTP, pagination, idempotency). The codebase shape is a modular monolith: one deployable app with clear modules, kept mostly stateless at the HTTP edge, with state in the agent graph or a relational database. Read the glossary, then take the courses in order.
+You are building a local Python API that runs a stateful agent and ships in Docker. The definitions and reading links are in [System and architectural design](#system-and-architectural-design). This phase applies the walkthrough and the store choice. Publish the API contract first (REST, HTTP, pagination, idempotency), then the tests that define done. The codebase shape is a modular monolith: one deployable app with clear modules, kept mostly stateless at the HTTP edge, with state in the agent graph or a relational database. The first agent interrupts before any write. A coding agent may edit the repo only after those tests exist. Read the glossary, then take the courses in order. Tests and the contract come before the LangGraph course.
 
 #### Concept glossary
 
@@ -262,6 +266,7 @@ Data structures that let a database locate rows without scanning the whole table
 - **Why it is used:** Full table scans become expensive as data grows.
 - **When to use it:** Columns used in searches, joins, sorting, or filtering, based on real queries.
 - **Trade-offs:** Use storage and make writes slower.
+- **Learn more:** [SQL Server index design guide](https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-index-design-guide). The build runs one hot query, reads the plan, and adds the index that plan justifies.
 
 ##### Delivery
 
@@ -289,7 +294,7 @@ Allowing a model to request execution of predefined functions.
 
 - **Why it is used:** Models cannot see your APIs or data unless you give them controlled tools.
 - **When to use it:** AI that must read or write real systems.
-- **Trade-offs:** Permissions, validation, hallucinated tool calls, and error handling become critical.
+- **Trade-offs:** Permissions, validation, hallucinated tool calls, and error handling become critical. Any write waits for a human approval interrupt. Do not wait until Phase 5 to add that gate.
 
 ###### LangGraph
 
@@ -303,15 +308,20 @@ A graph runtime for stateful agent workflows (nodes, edges, state, memory, inter
 
 Complete these after the glossary. Each link opens that course or module.
 
-1. [Shell Scripts for Beginners (KodeKloud)](https://kodekloud.com/courses/shell-scripts-for-beginners/) — **paid**
+1. [Shell Scripts for Beginners (KodeKloud)](https://kodekloud.com/courses/shell-scripts-for-beginners/) — **paid, optional** if you already write scripts at work
 2. [Introduction to Git (Microsoft Learn)](https://learn.microsoft.com/en-us/training/modules/intro-to-git/)
 3. [Docker Get Started workshop](https://docs.docker.com/get-started/workshop/)
-4. [Foundation: Introduction to LangGraph – Python (LangChain Academy)](https://academy.langchain.com/courses/intro-to-langgraph)
+4. [pytest getting started](https://docs.pytest.org/en/stable/getting-started.html)
+5. [Foundation: Introduction to LangGraph – Python (LangChain Academy)](https://academy.langchain.com/courses/intro-to-langgraph) — after the contract and the tests, not before
 
 #### Build
 
 - [ ] Write shell scripts to automate local setup and environment tasks
-- [ ] Build a Python API using LangGraph to manage a stateful agent workflow
+- [ ] Publish the API contract (REST, HTTP semantics, pagination, idempotency)
+- [ ] Add pytest for a successful write, a rejected call, and a retry that does not duplicate
+- [ ] Run one query plan and add the index it justifies ([SQL Server index design guide](https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-index-design-guide))
+- [ ] Build a Python API using LangGraph to manage a stateful agent workflow, with an interrupt before any write
+- [ ] Only after those tests are green, let a coding agent edit the repo, and record one defect the tests caught
 - [ ] Package the API and dependencies using Docker Compose
 - [ ] Push code and container configurations to a well-structured GitHub repository
 
@@ -326,7 +336,7 @@ Complete these after the glossary. Each link opens that course or module.
 
 **Goal:** Decide the trust boundary and the cloud shape: who can call the app, where secrets live, which network paths exist, and whether the design meets the Well-Architected Framework. Azure CLI, Key Vault, Entra ID, and VNets are how you apply it.
 
-**Feeds:** The Azure account, identity, and network that [Project 1](#project-1-cloud-native-microservice) and later projects run on.
+**Feeds:** The Azure account, identity, and network that [Project 1](#project-1-cloud-native-api-modular-monolith) and later projects run on.
 
 #### Overview
 
@@ -432,8 +442,8 @@ Choosing Azure services that match the design: App Service or Functions for comp
 
 Complete these after the glossary. Each link opens that learning path or module.
 
-1. [Introduction to Cloud Infrastructure: Describe cloud concepts](https://learn.microsoft.com/en-us/training/paths/microsoft-azure-fundamentals-describe-cloud-concepts/)
-2. [Introduction to Cloud Infrastructure: Describe Azure architecture and services](https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azure-architecture-services/)
+1. [Introduction to Cloud Infrastructure: Describe cloud concepts](https://learn.microsoft.com/en-us/training/paths/microsoft-azure-fundamentals-describe-cloud-concepts/) — **optional** if Azure is already daily work. This is AZ-900-style description, not the floor.
+2. [Introduction to Cloud Infrastructure: Describe Azure architecture and services](https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azure-architecture-services/) — **optional** on the same condition
 3. [Fundamentals of computer networking](https://learn.microsoft.com/en-us/training/modules/network-fundamentals/)
 4. [Introduction to Azure Virtual Networks](https://learn.microsoft.com/en-us/training/modules/introduction-to-azure-virtual-networks/)
 5. [Configure and secure Azure Key Vault](https://learn.microsoft.com/en-us/training/modules/configure-secure-key-vault/)
@@ -458,11 +468,11 @@ Complete these after the glossary. Each link opens that learning path or module.
 
 **Goal:** Design for more than one copy: scale, availability, replication, partitioning, consistency, and when a microservice is worth it. Terraform and AKS are how you build it.
 
-**Feeds:** [Portfolio Project 1](#project-1-cloud-native-microservice) — ACR, AKS, and Terraform.
+**Feeds:** [Portfolio Project 1](#project-1-cloud-native-api-modular-monolith) — ACR, AKS, and Terraform.
 
 #### Overview
 
-Phase 1 packaged an app; this phase places it on a cluster you can recreate. Terraform makes the VNet, Key Vault, ACR, and AKS repeatable. Kubernetes (CKAD focus: Pods, Deployments, Services) is how the container actually runs. Microservices, scaling, and load balancing become real once you have more than one instance. With more than one copy you also choose replication, partitioning, and whether reads must be strongly consistent. Prefer a modular monolith until independent deployability is worth the extra failure modes. Read the glossary, then take the courses in order.
+Phase 1 packaged an app; this phase places it on a cluster you can recreate. Terraform makes the VNet, Key Vault, ACR, and AKS repeatable. Kubernetes here means the task set, not the certificate: pods, deployments, services, probes, and identity. Book CKAD only if an employer asks. Microservices, scaling, and load balancing become real once you have more than one instance. With more than one copy you also choose replication, partitioning, and whether reads must be strongly consistent. Prefer a modular monolith until independent deployability is worth the extra failure modes. Read the glossary, then take the courses in order.
 
 #### Concept glossary
 
@@ -470,7 +480,7 @@ Phase 1 packaged an app; this phase places it on a cluster you can recreate. Ter
 
 ###### Infrastructure as Code
 
-Defining infrastructure in versioned configuration (Terraform or Bicep) instead of clicking in a portal.
+Defining infrastructure in versioned configuration instead of clicking in a portal. Terraform is the language on this plan. Read Bicep when an Azure sample uses it. Do not learn it as a second infrastructure language.
 
 - **Why it is used:** Hand-built environments drift and cannot be reviewed.
 - **When to use it:** Any environment you might need to recreate (dev, staging, production).
@@ -580,11 +590,11 @@ Complete these after the glossary. Each link opens that tutorial or module.
 
 **Goal:** Design production behavior: resilience, observability, delivery, and recovery. Pipelines are how you ship it.
 
-**Feeds:** The pipeline and telemetry for [Portfolio Project 1](#project-1-cloud-native-microservice).
+**Feeds:** The pipeline and telemetry for [Portfolio Project 1](#project-1-cloud-native-api-modular-monolith).
 
 #### Overview
 
-A production architecture includes how software is released. The path is: git push → lint and test → Terraform plan/apply → Docker build and push → AKS deploy. Observability (logs, metrics, traces) is how you answer what broke. Resilience (retry, backoff, circuit breaker, cache, rate limiting, backpressure) is how the running system survives blips. Recovery objectives say how much data you can lose and how long you can be down, which is a bigger decision than a retry. Requirements and SLAs are the constraints you design against. Read the glossary, then take the courses in order.
+A production architecture includes how software is released. The path is: git push → lint and test → Terraform plan/apply → Docker build and push → AKS deploy. GitHub Actions is the one pipeline that deploys the portfolio. Azure Pipelines is a short mapping exercise, because Azure DevOps still shows up in Microsoft estates. It is not a second product. Observability (logs, metrics, traces) is how you answer what broke. Resilience (retry, backoff, circuit breaker, cache, rate limiting, backpressure) is how the running system survives blips. Recovery objectives say how much data you can lose and how long you can be down, which is a bigger decision than a retry. Requirements and SLAs are the constraints you design against. Read the glossary, then take the courses in order.
 
 #### Concept glossary
 
@@ -717,8 +727,8 @@ RPO is how much data you can lose. RTO is how long you can be down. Disaster rec
 
 Complete these after the glossary. Each link opens that module or procedure.
 
-1. [Introduction to GitHub Actions](https://learn.microsoft.com/en-us/training/modules/introduction-to-github-actions/)
-2. [Create your first pipeline (Azure Pipelines)](https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline)
+1. [Introduction to GitHub Actions](https://learn.microsoft.com/en-us/training/modules/introduction-to-github-actions/) — the portfolio system of record
+2. [Create your first pipeline (Azure Pipelines)](https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline) — short mapping exercise only. The GitHub Actions pipeline is the one that deploys the portfolio.
 3. [Enable Azure Monitor OpenTelemetry for .NET, Node.js, Python, and Java applications](https://learn.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-enable)
 
 #### Build
@@ -732,6 +742,7 @@ Git push
 ```
 
 - [ ] Run automated unit tests on pull requests
+- [ ] Pin dependencies, and run one scanner on the pull request (GitHub dependency review or `pip-audit`)
 - [ ] Build and push Docker images to ACR
 - [ ] Automate Terraform deployments
 - [ ] Automate AKS deployments
@@ -746,13 +757,13 @@ Git push
 <details>
 <summary>Open Phase 5 — overview, glossary, courses, build</summary>
 
-**Goal:** Design the AI boundary: where agents, retrieval, and vector search sit in a production RAG system on Azure, and how you evaluate the answers.
+**Goal:** Design the AI boundary: where agents, retrieval, and vector search sit in a production RAG system on Azure, how you evaluate the answers, and what the agent is allowed to do.
 
 **Feeds:** [Portfolio Project 2](#project-2-cloud-native-stateful-ai-platform)
 
 #### Overview
 
-A model call is not a product. RAG retrieves organisational text, embeds it, and grounds the prompt so answers cite current private knowledge. You will provision Azure OpenAI and Azure AI Search with Terraform, attach the Phase 1 LangGraph agent with workload identity, and measure retrieval and answer quality. Read the glossary before you pick Search vs PGVector or a hosted model vs a local one.
+A model call is not a product. RAG retrieves organisational text, embeds it, and grounds the prompt so answers cite current private knowledge. Write about 20 evaluation questions, with expected sources, before you choose Azure AI Search or PGVector. The choice is about those questions. You will provision Azure OpenAI and the search index with Terraform, attach the Phase 1 LangGraph agent with workload identity, and fail the build when that checked-in set misses. Retrieved text is untrusted. A write still needs the approval interrupt from Phase 1. One read-only tool is also exposed over MCP, with the same permission as the in-process tool. Deep Agents stays off this phase: learn the explicit graph first, and take that harness only after this agent has state, tools, and an interrupt. Read the glossary, then take the courses in order.
 
 #### Concept glossary
 
@@ -790,13 +801,40 @@ Grounding means the answer is tied to retrieved sources. Evaluation measures whe
 - **When to use it:** Before you call a RAG system production.
 - **Trade-offs:** You need labelled questions, metrics, and time; demos skip this and fail later.
 
+###### Evaluation set
+
+A checked-in set of about 20 questions with the sources an answer must use. The build fails when retrieval or answer checks miss.
+
+- **Why it is used:** A vendor metric cannot be the only test. The dataset is yours.
+- **When to use it:** Write the questions before you choose Azure AI Search or PGVector. Automate the set in this phase.
+- **Trade-offs:** The set goes stale if the corpus changes and you do not update it.
+- **Learn more:** [Select, deploy, and evaluate Microsoft Foundry models](https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/). The Foundry module measures quality. The set is still yours.
+
+###### Untrusted context and prompt injection
+
+Retrieved text and user input are data, not instructions. A prompt can try to override the system prompt and the tools.
+
+- **Why it is used:** RAG does not remove prompt injection. The 2025 OWASP LLM list still leads with it.
+- **When to use it:** Any tool call, and any prompt that includes retrieved text. Least privilege, and human approval before a write.
+- **Trade-offs:** The interrupt slows the agent down. That is the point.
+- **Learn more:** [OWASP LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) and the [AI Agent Security cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html).
+
+###### MCP
+
+Model Context Protocol: a transport that exposes a tool you already control, with the same permission as the in-process tool.
+
+- **Why it is used:** Clients need a shared way to call tools. Security is the constraint on adoption.
+- **When to use it:** After the in-process tool works. One read-only tool, also available over MCP. Not a separate phase.
+- **Trade-offs:** Another interface to secure. Do not grant the MCP server more than the in-process tool.
+- **Learn more:** [modelcontextprotocol.io](https://modelcontextprotocol.io/).
+
 ###### Azure OpenAI vs calling a model locally
 
 Hosted Azure OpenAI versus a model process you run yourself.
 
 - **Why it is used:** Azure OpenAI gives managed identity, regional compliance, and operational cover. Local models avoid data leaving your box and can cut token cost.
 - **When to use it:** Azure OpenAI for company production on this roadmap. Local models for experiments or strict isolation.
-- **Trade-offs:** Hosted = quota, cost, and vendor limits. Local = GPUs, patching, and you own uptime.
+- **Trade-offs:** Hosted = quota, cost, and vendor limits. Local = GPUs, patching, and you own uptime. Fine-tuning and local GPU hosting are not on this plan. Revisit a local model only when RAG and prompting miss a measured eval and the data cannot go to a hosted model.
 
 ###### Azure AI Search vs PGVector
 
@@ -818,8 +856,11 @@ Complete these after the glossary. Each link opens that module.
 
 - [ ] Provision Azure OpenAI and Azure AI Search using Terraform
 - [ ] Build an end-to-end RAG solution
-- [ ] Connect LangGraph agents using Azure workload identity
-- [ ] Implement evaluation metrics for retrieval quality and answer quality
+- [ ] Connect the LangGraph agent using Azure workload identity
+- [ ] Check in a set of about 20 questions with expected sources. The set fails CI when retrieval or answer checks miss
+- [ ] One write tool cannot run without an approval interrupt
+- [ ] One request trace shows retrieval, the model call, and token cost, using the OpenTelemetry path from Phase 4
+- [ ] One read-only tool is also available as an MCP server, with the same permission as the in-process tool
 
 </details>
 
@@ -830,13 +871,13 @@ Complete these after the glossary. Each link opens that module.
 <details>
 <summary>Open Phase 6 — overview, glossary, courses, build</summary>
 
-**Goal:** Design the boundaries between systems: events, messaging, outbox, saga, CQRS, and a written design. Boomi on AKS is how you connect them.
+**Goal:** Design the boundaries between systems: events, messaging, outbox, and a written design. Saga and CQRS stay decision vocabulary. Boomi on AKS is how you connect them, with a Service Bus fallback if the licence blocks the lab.
 
 **Feeds:** [Portfolio Project 3](#project-3-enterprise-ai-integration-platform)
 
 #### Overview
 
-Enterprise systems already emit events (an order created, a customer updated). You do not poll them with a cron job if you can subscribe. This phase is messaging plus Boomi: Atom or Molecule on AKS receives a webhook, maps JSON/XML, calls the AI API, and writes the result back. Sync versus async is the first cut; a queue plus an outbox, a saga, or CQRS is how you keep that async work consistent. Queues versus pub/sub, and dead-letter queues, are the other decisions. Document the result with C4 diagrams and ADRs so another engineer can understand it. Read the glossary, then take the courses in order.
+Enterprise systems already emit events (an order created, a customer updated). You do not poll them with a cron job if you can subscribe. This phase is messaging plus Boomi: Atom or Molecule on AKS receives a webhook, maps JSON/XML, calls the AI API, and writes the result back. Sync versus async is the first cut. A queue plus an outbox is how you keep that async work consistent. Saga and CQRS stay decision vocabulary: when not to use them. The build is one webhook, one queue, a dead-letter path, and an idempotent write-back. If a Molecule licence blocks the AKS lab, build that same path with Service Bus and a Python worker, and document Boomi as the runtime you use at work. Do not drop the product, and do not spend the phase fighting a licence. Business Central stays an example system on the far side of the integration, not a development course. Document the result with C4 diagrams and ADRs so another engineer can understand it. Read the glossary, then take the courses in order.
 
 #### Concept glossary
 
@@ -910,7 +951,7 @@ Write the business change and the event in the same database transaction, then p
 A multi-step business process in which each step can fail and needs a compensating action.
 
 - **Why it is used:** One distributed transaction across services is not available.
-- **When to use it:** When a business outcome needs several services, and a later step can force an earlier step to undo.
+- **When to use it:** As a decision, not as this phase’s build. Use it when a business outcome needs several services and a later step can force an earlier step to undo. Do not implement a saga here.
 - **Trade-offs:** Compensation logic, and a harder path to see the whole process.
 - **Learn more:** [Event-driven architecture style](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven).
 
@@ -919,7 +960,7 @@ A multi-step business process in which each step can fail and needs a compensati
 Separate the write model from a read model when their shapes or scale differ.
 
 - **Why it is used:** The query that serves a screen is often not the shape of the transaction that changed the data.
-- **When to use it:** When reads and writes diverge enough that one model fights both jobs.
+- **When to use it:** As a decision, not as this phase’s build. Use it when reads and writes diverge enough that one model fights both jobs. Do not implement CQRS here.
 - **Trade-offs:** The read side lags the write, and you now have two models to keep aligned.
 - **Learn more:** [CQRS pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs).
 
@@ -967,7 +1008,7 @@ Complete these after the glossary. Each link opens that procedure or module.
 
 Three projects, each building on the last. Start a project only after the phases that feed it.
 
-### Project 1: Cloud-Native Microservice
+### Project 1: Cloud-native API (modular monolith)
 
 **Start after:** Phases 1–4.
 
@@ -978,11 +1019,15 @@ Python API
   → GitHub Actions pipeline
 ```
 
+The title is a modular monolith. Do not describe this project as microservices.
+
 #### Deliverables
 
+- API contract
+- Test suite
 - Containerised API
 - Infrastructure as Code
-- CI/CD pipeline
+- CI/CD pipeline (GitHub Actions is the one that deploys)
 - AKS deployment
 
 ### Project 2: Cloud-Native Stateful AI Platform
@@ -998,10 +1043,12 @@ LangGraph agents
 
 #### Deliverables
 
-- Stateful multi-agent workflow
+- Stateful agent workflow with tools and an approval interrupt
 - Enterprise RAG system
+- Checked-in evaluation set that fails CI on a miss
 - Azure OpenAI integration
 - Azure AI Search integration
+- One read-only tool also available over MCP
 
 ### Project 3: Enterprise AI Integration Platform
 
@@ -1013,6 +1060,8 @@ Enterprise event
   → LangGraph AI service
   → Enterprise system update
 ```
+
+If a Molecule licence blocks the lab, the same webhook, queue, dead-letter path, and idempotent write-back run on Service Bus and a Python worker. The write-up still names Boomi as the runtime you use at work.
 
 #### Deliverables
 
@@ -1029,7 +1078,7 @@ Every repository should include a production-grade `README.md` containing the fo
 
 ### 1. Problem statement
 
-A clear explanation of the business problem being solved.
+A clear explanation of the business problem being solved, the success metric, and the rollback.
 
 ### 2. Architecture diagram
 
@@ -1083,8 +1132,8 @@ By completing this roadmap, you will be able to:
 - Build production-grade software applications
 - Containerise and orchestrate workloads with Docker and AKS
 - Provision cloud infrastructure using Terraform
-- Implement CI/CD pipelines using GitHub Actions and Azure Pipelines
-- Design and deploy enterprise-grade AI systems using Azure OpenAI and RAG
+- Implement the portfolio pipeline in GitHub Actions, and map the same path in Azure Pipelines
+- Design and deploy an enterprise RAG system on Azure OpenAI, with a fixed evaluation set and a limit on what the agent may do
 - Integrate AI solutions with enterprise platforms through Boomi
 - Demonstrate engineering capability through a portfolio of real-world cloud-native and AI projects
 
